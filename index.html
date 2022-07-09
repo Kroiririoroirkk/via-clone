@@ -4377,6 +4377,7 @@ _via_file_annotator.prototype._file_html_element_compute_scale = function() {
   var ch, cw;
   var ch = ch0;
   var cw = Math.floor(ar * ch);
+  var zoom_scale_value = 1;
   switch(this.va.zoom_mode) {
   case _VIA_ZOOM_MODE.FITHEIGHT:
     ch = maxh;
@@ -4392,7 +4393,7 @@ _via_file_annotator.prototype._file_html_element_compute_scale = function() {
     ch = Math.floor(cw/ar);
     break;
   default:
-    var zoom_scale_value = _VIA_ZOOM_SCALE_VALUE_LIST[this.va.zoom_scale_value_index];
+    zoom_scale_value = _VIA_ZOOM_SCALE_VALUE_LIST[this.va.zoom_scale_value_index];
     if ( this.d.store.file[this.fid].type !== _VIA_FILE_TYPE.VIDEO ) {
       ch = Math.floor(zoom_scale_value * ch0);
       cw = Math.floor(ar * ch);
@@ -4413,19 +4414,23 @@ _via_file_annotator.prototype._file_html_element_compute_scale = function() {
   this.original_height = ch0;
   this.file_html_element_size_css = 'width:' + cw + 'px;height:' + ch + 'px;';
   if ( this.d.store.file[this.fid].type === _VIA_FILE_TYPE.VIDEO && this.va.zoom_mode === _VIA_ZOOM_MODE.SCALE ) {
-    this.file_html_element_size_css += 'transform:scale(' + zoom_scale_value + ');transform-origin:top;';
+    this.file_html_element_size_css += 'transform:scale(' + zoom_scale_value + ');transform-origin:left top;';
   }
 
   
 
   switch( this.d.store.config.ui.file_content_align ) {
   case 'center':
-    this.left_pad = Math.floor( (maxw - this.cwidth) / 2 );
-    this.file_html_element_size_css += 'left:' + this.left_pad + 'px;';
+    this.left_pad = Math.floor( (maxw - this.cwidth*zoom_scale_value) / 2 );
+    if ( this.left_pad > 0 ) {
+      this.file_html_element_size_css += 'left:' + this.left_pad + 'px;';
+    }
     break;
   case 'right':
-    this.left_pad = maxw - this.cwidth;
-    this.file_html_element_size_css += 'left:' + this.left_pad + 'px;';
+    this.left_pad = maxw - this.cwidth*zoom_scale_value;
+    if ( this.left_pad > 0 ) {
+      this.file_html_element_size_css += 'left:' + this.left_pad + 'px;';
+    }
     break;
   default:
     this.left_pad = 0;
