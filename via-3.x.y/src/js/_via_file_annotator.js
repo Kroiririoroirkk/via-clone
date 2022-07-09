@@ -692,16 +692,16 @@ _via_file_annotator.prototype._rinput_keydown_handler = function(e) {
     return;
   }
 
-  if ( !e.ctrlKey && (e.key === '-' || e.key === '=' || (e.shiftKey && e.key === '+')) ) {
+  if ( !e.ctrlKey && (e.key === '<' || e.key === '=' || (e.shiftKey && e.key === '>')) ) {
     e.preventDefault();
     switch(e.key) {
     case '=':
       this._zoom_reset();
       break;
-    case '+':
+    case '>':
       this._zoom_in();
       break;
-    case '-':
+    case '<':
       this._zoom_out();
       break;
     }
