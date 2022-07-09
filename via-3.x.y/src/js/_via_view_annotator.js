@@ -173,6 +173,10 @@ _via_view_annotator.prototype._view_annotate_single_video = function(vid) {
   this.view_metadata_container.style.display = 'block';
 
   // occupy the full container with single image
+  var currentTime = 0;
+  if ( this.file_container ) {
+    currentTime = this.file_container[0][0].childNodes[0].currentTime;
+  }
   this.file_annotator = [];
   this.file_container = [];
   this.view_content_container.innerHTML = '';
@@ -185,6 +189,7 @@ _via_view_annotator.prototype._view_annotate_single_video = function(vid) {
   this.file_annotator[0][0] = new _via_file_annotator(this, this.d, vid0, '', this.file_container[0][0]);
 
   this.file_annotator[0][0]._file_load().then( function(ok) {
+    this.file_annotator[0][0].file_html_element.currentTime = currentTime;
     this.view_metadata_container.innerHTML = '';
     // setup view metadata editor
     this.temporal_segmenter_container = document.createElement('div');

@@ -74,17 +74,17 @@ function _via(via_container) {
     }
   }.bind(this));
   this.cp.on_event('zoom_in', this._ID, function(data, event_payload) {
-    if(this.va.view_mode === _VIA_VIEW_MODE.IMAGE1) {
+    if(this.va.view_mode === _VIA_VIEW_MODE.IMAGE1 || this.va.view_mode === _VIA_VIEW_MODE.VIDEO1) {
       this.va.file_annotator[0][0]._zoom_in();
     }
   }.bind(this));
   this.cp.on_event('zoom_out', this._ID, function(data, event_payload) {
-    if(this.va.view_mode === _VIA_VIEW_MODE.IMAGE1) {
+    if(this.va.view_mode === _VIA_VIEW_MODE.IMAGE1 || this.va.view_mode === _VIA_VIEW_MODE.VIDEO1) {
       this.va.file_annotator[0][0]._zoom_out();
     }
   }.bind(this));
   this.cp.on_event('fit_screen', this._ID, function(data, event_payload) {
-    if(this.va.view_mode === _VIA_VIEW_MODE.IMAGE1) {
+    if(this.va.view_mode === _VIA_VIEW_MODE.IMAGE1 || this.va.view_mode === _VIA_VIEW_MODE.VIDEO1) {
       this.va.file_annotator[0][0]._zoom_fit_screen();
     }
   }.bind(this));

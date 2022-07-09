@@ -383,7 +383,6 @@ _via_file_annotator.prototype._file_create_html_element = function() {
   switch( this.d.store.file[this.fid].type ) {
   case _VIA_FILE_TYPE.VIDEO:
     media = document.createElement('video');
-    media.setAttribute('controls', 'true');
     media.setAttribute('playsinline', 'true');
     media.setAttribute('loop', 'false');
     //media.setAttribute('crossorigin', 'anonymous');
@@ -466,8 +465,17 @@ _via_file_annotator.prototype._file_html_element_compute_scale = function() {
     break;
   default:
     var zoom_scale_value = _VIA_ZOOM_SCALE_VALUE_LIST[this.va.zoom_scale_value_index];
-    ch = Math.floor(zoom_scale_value * ch0);
-    cw = Math.floor(ar * ch);
+    if ( this.d.store.file[this.fid].type !== _VIA_FILE_TYPE.VIDEO ) {
+      ch = Math.floor(zoom_scale_value * ch0);
+      cw = Math.floor(ar * ch);
+    } else {
+      ch = maxh;
+      cw = Math.floor(ar * ch);
+      if ( cw > maxw ) {
+        cw = maxw;
+        ch = Math.floor(cw/ar);
+      }
+    }
   }
   this.cwidth = cw;
   this.cheight = ch;
@@ -476,6 +484,11 @@ _via_file_annotator.prototype._file_html_element_compute_scale = function() {
   this.original_width = cw0;
   this.original_height = ch0;
   this.file_html_element_size_css = 'width:' + cw + 'px;height:' + ch + 'px;';
+  if ( this.d.store.file[this.fid].type === _VIA_FILE_TYPE.VIDEO && this.va.zoom_mode === _VIA_ZOOM_MODE.SCALE ) {
+    this.file_html_element_size_css += 'transform:scale(' + zoom_scale_value + ');transform-origin:top;';
+  }
+
+  
 
   switch( this.d.store.config.ui.file_content_align ) {
   case 'center':
@@ -2640,26 +2653,12 @@ _via_file_annotator.prototype._rinput_enable = function() {
   this._state_set(_VIA_RINPUT_STATE.IDLE);
   this.input.style.pointerEvents = 'auto';
   this.input.classList.add('rinput_enabled');
-  if ( this.d.store.file[this.fid].type === _VIA_FILE_TYPE.VIDEO ||
-       this.d.store.file[this.fid].type === _VIA_FILE_TYPE.AUDIO
-     ) {
-    if ( this.d.store.file[this.fid].type === _VIA_FILE_TYPE.VIDEO ) {
-      this.file_html_element.removeAttribute('controls');
-    }
-    // _via_util_msg_show('At any time, press <span class="key">Space</span> to play or pause the video.');
-  }
 }
 
 _via_file_annotator.prototype._rinput_disable = function() {
   this._state_set(_VIA_RINPUT_STATE.SUSPEND);
   this.input.style.pointerEvents = 'none';
   this.input.classList.remove('rinput_enabled');
-  if ( this.d.store.file[this.fid].type === _VIA_FILE_TYPE.VIDEO ||
-       this.d.store.file[this.fid].type === _VIA_FILE_TYPE.AUDIO
-     ) {
-    this.file_html_element.setAttribute('controls', 'true');
-    //_via_util_msg_show('At any time, press <span class="key">Space</span> to play or pause the video.', true);
-  }
 }
 
 //
