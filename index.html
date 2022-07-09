@@ -2142,7 +2142,7 @@ _via_data.prototype._init_default_project = function() {
       'spatial_metadata_editor_visible':true,
       'temporal_segment_metadata_editor_visible':true,
       'spatial_region_label_attribute_id':'',
-      'gtimeline_visible_row_count':'4',
+      'gtimeline_visible_row_count':'2',
     },
   };
   p['attribute'] = {};
@@ -4271,7 +4271,6 @@ _via_file_annotator.prototype._file_on_attribute_update = function(e) {
 _via_file_annotator.prototype._file_load = function() {
   return new Promise( function(ok_callback, err_callback) {
     this.file_html_element = this._file_create_html_element();
-    this.file_html_element.setAttribute('title', this.d.store.file[this.fid].fname);
     var file_src = this.d.file_get_src(this.d.store.file[this.fid].fid);
     if ( file_src === '' ) {
       this.d.file_free_resources(this.fid);

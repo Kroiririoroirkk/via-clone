@@ -341,7 +341,6 @@ _via_file_annotator.prototype._file_on_attribute_update = function(e) {
 _via_file_annotator.prototype._file_load = function() {
   return new Promise( function(ok_callback, err_callback) {
     this.file_html_element = this._file_create_html_element();
-    this.file_html_element.setAttribute('title', this.d.store.file[this.fid].fname);
     var file_src = this.d.file_get_src(this.d.store.file[this.fid].fid);
     if ( file_src === '' ) {
       this.d.file_free_resources(this.fid);
