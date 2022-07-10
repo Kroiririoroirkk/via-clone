@@ -174,7 +174,7 @@ _via_view_annotator.prototype._view_annotate_single_video = function(vid) {
 
   // occupy the full container with single image
   var currentTime = 0;
-  if ( this.file_container ) {
+  if ( this.file_container && this.file_container[0][0].childNodes.length > 0 ) {
     currentTime = this.file_container[0][0].childNodes[0].currentTime;
   }
   this.file_annotator = [];
