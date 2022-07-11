@@ -6718,7 +6718,11 @@ _via_file_annotator.prototype._smetadata_hide = function() {
 _via_file_annotator.prototype._smetadata_set_position = function() {
   var mid = this.selected_mid_list[0];
   var zoom_scale_value = _VIA_ZOOM_SCALE_VALUE_LIST[this.va.zoom_scale_value_index];
-  var x = this.left_pad + this.creg[mid][1]*zoom_scale_value;
+  if ( this.left_pad > 0 ) {
+    var x = this.left_pad + this.creg[mid][1]*zoom_scale_value;
+  } else {
+    var x = this.creg[mid][1]*zoom_scale_value;
+  }  
   var y = this.conf.REGION_SMETADATA_MARGIN + this.creg[mid][2]*zoom_scale_value;
   var shape_id = this.creg[mid][0];
   switch(shape_id) {
