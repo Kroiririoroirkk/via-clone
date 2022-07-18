@@ -12307,7 +12307,7 @@ function _via(via_container) {
 
   // control panel shows the view_manager_container
   this.cp = new _via_control_panel(this.control_panel_container, this);
-  this.cp._set_region_shape('RECTANGLE');
+  this.cp._set_region_shape('POINT');
 
   // event handlers for buttons in the control panel
   this.cp.on_event('region_shape', this._ID, function(data, event_payload) {
