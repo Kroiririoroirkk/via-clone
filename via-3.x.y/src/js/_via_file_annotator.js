@@ -1658,7 +1658,7 @@ _via_file_annotator.prototype._creg_draw_label = function(mid) {
       break;
     }
 
-    if ( label === '' ) {
+    if ( typeof label === 'undefined' || label === '' ) {
       return;
     }
     if ( label.length > _VIA_SPATIAL_REGION_LABEL_MAXLENGTH ) {
